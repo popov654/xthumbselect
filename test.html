@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Test</title>
+<script type="text/javascript" src="js/library.js"></script>
+<script type="text/javascript" src="xthumbselect.js"></script>
+<link type="text/css" rel="stylesheet" href="css/main.css"/>
+<link type="text/css" rel="stylesheet" href="xthumbselect.css"/>
+<script type="text/javascript">
+
+function openSelectThumbDialog() {
+   fade(document.getElementById('darkBackground'), 0.0, 0.3, 0.05, 0)
+   fade(document.getElementById('selectThumbDialog'), 0.0, 1.0, 0.1, 0)
+}
+
+function closeSelectThumbDialog(closeBackground) {
+   fade(document.getElementById('selectThumbDialog'), 1.0, 0.0, -0.1, 0)
+   if (closeBackground) {
+      fade(document.getElementById('darkBackground'), 0.3, 0.0, -0.05, 0)
+   }
+}
+
+function openChangeAreaDialog() {
+   if (document.getElementById('darkBackground').style.display != 'block') {
+      fade(document.getElementById('darkBackground'), 0.0, 0.3, 0.05, 0)
+   }
+   fade(document.getElementById('changeAreaDialog'), 0.0, 1.0, 0.1, 0)
+}
+
+function closeChangeAreaDialog() {
+   fade(document.getElementById('changeAreaDialog'), 1.0, 0.0, -0.1, 0)
+   fade(document.getElementById('selectThumbDialog'), 0.0, 1.0, 0.1, 0)
+}
+
+function showCoords() {
+   var coords = XThumbSelect.getWindowCoords(document.getElementById('changeArea'))
+   if (window.localStorage) localStorage.coords = JSON.stringify(coords)
+   alert(JSON.stringify(coords))
+}
+
+function init() {
+   XThumbSelect.init(document.getElementById('changeArea'), 'photo.png')
+   if (window.localStorage && window.localStorage.coords) {
+      XThumbSelect.setWindowCoords(document.getElementById('changeArea'), JSON.parse(window.localStorage.coords))
+   }
+   openSelectThumbDialog()
+}
+
+window.onload = init
+
+</script>
+</head>
+<body>
+<div id="darkBackground"></div>
+<div id="confirmDialog">
+   <div class="header">
+      <div class="title" style="right: 0px;">Вы уверены?</div>
+   </div>
+   <div style="margin-top: 6%; margin-bottom: 48px; padding-left: 10px; padding-right: 10px; text-align: center;"></div>
+   <div style="position: absolute; bottom: 0px; padding-bottom: 14px; width: 100%; text-align: center;"><div class="okButton" onclick="document.getElementById('confirmDialog').action.call(); fade(document.getElementById('confirmDialog'), 1.0, 0.0, -0.1, 0); fade(document.getElementById('darkBackground'), 0.3, 0.0, -0.1, 0)">OK</div><div class="okButton" style="padding-left: 16px; padding-right: 16px;" onclick="fade(document.getElementById('confirmDialog'), 1.0, 0.0, -0.1, 0); fade(document.getElementById('darkBackground'), 0.3, 0.0, -0.1, 0)">Отмена</div></div>
+</div>
+<div id="infoDialog">
+   <div class="header">
+      <div class="title" style="right: 0px;">Сообщение</div>
+   </div>
+   <div style="margin-top: 6%; margin-bottom: 48px; padding-left: 10px; padding-right: 10px; text-align: center;"></div>
+   <div style="position: absolute; bottom: 14px; width: 100%; text-align: center;"><div class="okButton" onclick="fade(document.getElementById('infoDialog'), 1.0, 0.0, -0.1, 0); fade(document.getElementById('darkBackground'), 0.3, 0.0, -0.1, 0)">OK</div></div>
+</div>
+<div id="selectThumbDialog">
+   <div class="header">
+      <div class="title">Выбор миниатюры</div>
+      <div class="closeButton" onclick="closeSelectThumbDialog(true)"></div>
+   </div>
+   <div style="position: absolute; left: 10px; right: 10px; top: 36px; height: 60px; padding-left: 1px;">
+      <div class="okButton" style="display: block; width: 78%; margin-top: 10px" onclick="closeSelectThumbDialog(false); openChangeAreaDialog()">Выбрать область</div>
+      <div class="okButton" style="display: block; width: 78%; margin-top: 10px" onclick="">Загрузить изображение</div>
+   </div>
+</div>
+<div id="changeAreaDialog">
+   <div class="header">
+      <div class="title">Выбор области</div>
+      <div class="closeButton" onclick="closeChangeAreaDialog(false)"></div>
+   </div>
+   <div id="changeArea">
+      <div id="curtain"></div>
+      <div id="window"></div>
+   </div>
+   <div class="okButton" style="display: block; position: absolute; left: 198px; width: 60px; top: 45px" onclick="showCoords()">Сохранить</div>
+</div>
+</body>
+</html>

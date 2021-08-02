@@ -1,0 +1,27 @@
+#changeArea {
+   width: 140px;
+   height: 200px;
+   position: relative;
+   margin-top: 20px;
+   overflow: hidden;
+}
+#changeArea > .curtain {
+   background: #000;
+   opacity: 0.5;
+   position: absolute;
+   top: 0px;
+   left: 0px;
+   width: 100%;
+   height: 100%;
+   overflow: hidden;
+}
+#changeArea > .rect {
+   position: absolute;
+   top: 0px;
+   left: 0px;
+   width: 140px;
+   height: 140px;
+   overflow: hidden;
+   outline: 2px solid #fc0;
+   outline-offset: -2px;
+}
